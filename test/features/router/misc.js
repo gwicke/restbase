@@ -20,19 +20,19 @@ module.exports = function (config) {
     });
     describe('request templating handler', function() {
         it('should create code out of template', function() {
-            var evaluator = new request_parser();
+            var evaluator = new request_parser().eval_request;
             // pass a template which uses parent request
-            var e = evaluator.eval_request("$request");
+            var e = evaluator("$request");
             assert.deepEqual(e({uri:'/foo/bar'}), {uri:'/foo/bar'})
             
             // pass a template with basic uri
-            e = evaluator.eval_request({
+            e = evaluator({
                 uri:'/foobar/bar',
             });
             assert.deepEqual(e({uri:'/foo/bar'}), {});
             
             // pass a template with basic uri and header
-            e = evaluator.eval_request({
+            e = evaluator({
                 uri:'/foobar/bar',
                 header: '$request.header'
             });
